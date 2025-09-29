@@ -3,7 +3,8 @@
   rel="stylesheet"
   href="{% static 'css/cats/cat-index.css' %}"
 />
-{% endblock %} {% block content %}
+{% endblock %} 
+{% block content %}
 
 <section class="page-header">
   <h1>Cat List</h1>
@@ -28,6 +29,7 @@
 <section class="card-container">
   {% for cat in cats %}
   <div class="card">
+    <a href="{% url 'cat-detail' cat.id %}">
     <div class="card-content">
       <div class="card-img-container">
         <img
@@ -43,6 +45,7 @@
       {% endif %}
       <p><small>{{ cat.description }}</small></p>
     </div>
+    </a>
   </div>
   {% endfor %}
 </section>
