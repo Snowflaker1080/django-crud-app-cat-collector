@@ -2,16 +2,16 @@
 {% load static %} 
 
 {% block head %}
-<link 
-  href="https://cdn.jsdelivr.net/npm/mc-datepicker/dist/mc-calendar.min.css" 
-  rel="stylesheet" 
-/>
+<!-- New MCDatepicker CSS -->
+<link href="https://cdn.jsdelivr.net/npm/mc-datepicker/dist/mc-calendar.min.css" rel="stylesheet"/>
 <link rel="stylesheet" href="{% static 'css/mcdp.css' %}">
+
 <!-- MCDatepicker JS -->
-<script 
-  src="https://cdn.jsdelivr.net/npm/mc-datepicker/dist/mc-calendar.min.js"
->
-</script>
+<script src="https://cdn.jsdelivr.net/npm/mc-datepicker/dist/mc-calendar.min.js"></script>
+
+<!-- load our initializer (defer so it runs after parsing) -->
+<script defer src="{% static 'js/cat-detail.js' %}"></script>
+
 <link rel="stylesheet" href="{% static 'css/cats/cat-detail.css' %}" />
 {% endblock %} 
 
@@ -71,7 +71,7 @@
       </form>
 
       <h3>Past Feedings</h3>
-        % if cat.feeding_set.all.count %}
+      {% if cat.feedings.all %}
       <table>
         <thead>
           <tr>
@@ -80,20 +80,19 @@
           </tr>
         </thead>
       <tbody>
-        % for feeding in cat.feeding_set.all %}
-      <tr>
-        <td>{{feeding.date}}</td>
-        <td>{{feeding.get_meal_display}}</td>
-      </tr>
-      {% endfor %}
+        {% for feeding in cat.feedings.all %}
+        <tr>
+          <td>{{ feeding.date }}</td>
+          <td>{{ feeding.get_meal_display }}</td>
+        </tr>
+        {% endfor %}
       </tbody>
       </table>
-        {% else %}
+      {% else %}
       <div class="subsection-content">
-        <p>⚠️ {{cat.name}} has not been fed!</p>
+        <p>⚠️ {{ cat.name }} has not been fed!</p>
       </div>
-        {% endif %}
-
+      {% endif %}
     </section>
 
 <section class="toys">
